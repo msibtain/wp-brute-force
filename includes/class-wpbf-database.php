@@ -34,6 +34,7 @@ class WPBF_Database {
 		add_option( 'wpbf_max_attempts', 5 );
 		add_option( 'wpbf_lockout_duration', 900 );
 		add_option( 'wpbf_attempt_window', 300 );
+		add_option( 'wpbf_login_challenge', false );
 	}
 
 	/**

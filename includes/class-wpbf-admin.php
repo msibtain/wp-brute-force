@@ -51,6 +51,7 @@ class WPBF_Admin {
 			update_option( 'wpbf_max_attempts', max( 1, (int) $_POST['wpbf_max_attempts'] ) );
 			update_option( 'wpbf_lockout_duration', max( 60, (int) $_POST['wpbf_lockout_duration'] ) );
 			update_option( 'wpbf_attempt_window', max( 60, (int) $_POST['wpbf_attempt_window'] ) );
+			update_option( 'wpbf_login_challenge', ! empty( $_POST['wpbf_login_challenge'] ) );
 
 			add_settings_error(
 				'wpbf_messages',
@@ -88,9 +89,10 @@ class WPBF_Admin {
 		$total    = $logs['total'];
 		$pages    = max( 1, (int) ceil( $total / $per_page ) );
 
-		$max_attempts     = (int) get_option( 'wpbf_max_attempts', 5 );
-		$lockout_duration = (int) get_option( 'wpbf_lockout_duration', 900 );
-		$attempt_window   = (int) get_option( 'wpbf_attempt_window', 300 );
+		$max_attempts      = (int) get_option( 'wpbf_max_attempts', 5 );
+		$lockout_duration  = (int) get_option( 'wpbf_lockout_duration', 900 );
+		$attempt_window    = (int) get_option( 'wpbf_attempt_window', 300 );
+		$login_challenge   = (bool) get_option( 'wpbf_login_challenge', false );
 
 		settings_errors( 'wpbf_messages' );
 		?>
@@ -134,6 +136,21 @@ class WPBF_Admin {
 								value="<?php echo esc_attr( $lockout_duration ); ?>" min="60" class="small-text" />
 							<p class="description">
 								<?php esc_html_e( 'How long a blocked IP must wait before trying again.', 'wp-brute-force' ); ?>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<?php esc_html_e( 'Login Challenge', 'wp-brute-force' ); ?>
+						</th>
+						<td>
+							<label for="wpbf_login_challenge">
+								<input type="checkbox" name="wpbf_login_challenge" id="wpbf_login_challenge" value="1"
+									<?php checked( $login_challenge ); ?> />
+								<?php esc_html_e( 'Require a verification code before showing the login form', 'wp-brute-force' ); ?>
+							</label>
+							<p class="description">
+								<?php esc_html_e( 'Visitors must enter a code displayed on screen before they can access the username and password fields.', 'wp-brute-force' ); ?>
 							</p>
 						</td>
 					</tr>
