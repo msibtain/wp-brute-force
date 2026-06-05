@@ -22,6 +22,7 @@ define( 'WPBF_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 require_once WPBF_PLUGIN_DIR . 'includes/class-wpbf-database.php';
 require_once WPBF_PLUGIN_DIR . 'includes/class-wpbf-brute-force.php';
+require_once WPBF_PLUGIN_DIR . 'includes/class-wpbf-xmlrpc.php';
 require_once WPBF_PLUGIN_DIR . 'includes/class-wpbf-admin.php';
 
 register_activation_hook( __FILE__, array( 'WPBF_Database', 'activate' ) );
@@ -32,6 +33,7 @@ register_deactivation_hook( __FILE__, array( 'WPBF_Database', 'deactivate' ) );
  */
 function wpbf_init() {
 	new WPBF_Brute_Force();
+	new WPBF_XMLRPC();
 
 	if ( is_admin() ) {
 		new WPBF_Admin();
